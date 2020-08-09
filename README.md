@@ -4,6 +4,8 @@ Summary of concurrency in Python sourced from various articles.
 
 - [Python Concurrency](#python-concurrency)
   - [Introduction](#introduction)
+  - [Concurrency and Parallelism](#concurrency-and-parallelism)
+  - [When Is Concurrency Useful](#when-is-concurrency-useful)
   - [Sources](#sources)
 
 ## Introduction
@@ -39,10 +41,35 @@ Summary of concurrency in Python sourced from various articles.
 - **Multiprocessing**
   - the use of two or more CPUs within a single computer system
 - **GIL (Global Interpreter Lock)**
-  - in CPython, GIL is the mutex - the mutual exclusion lock - which makes things thread safe
+  - in CPython, GIL is the mutex - the mutual exclusion lock - which makes things thread-safe
   - prevents multiple threads from executing Python code in parallel
   - the lock can be held by only one thread at a time and if we want to execute a thread then it must acquire the lock first
+  - necessary because CPython's memory management is not thread-safe
   - there are some libraries and implementations in Python such as Numpy, Jython and IronPython that work without any interaction with GIL
+
+## Concurrency and Parallelism
+
+- Concurrency: making progress on more than 1 task simultaneously
+  - in Python, `threading` and `asyncio` both run on a single processor and therefore only run one at a time
+    - they find ways to take turns to speed up the overall process
+  - `threading`: uses _pre-emptive multitasking_
+    - the operating system actually knows about each thread and can interrupt it at any time to start running a different thread, i.e., pre-empt your thread to make the switch
+    - this switch can happen at any time, including in the middle of a single Python statement
+  - `asyncio`: uses _cooperative multitasking_
+    - tasks must coded to cooperate by announcing when they are ready to be switched out
+    - you always know where your task will be swapped out
+- Parallelism: process tasks or subtasks (by splitting a task) in parallel, for instance on multiple CPUs or cores, at the exact same time
+  - with `multiprocessing`, Python creates new processes
+    - each task in a multiprocessing program can run on a different core, and at the same time
+
+## When Is Concurrency Useful
+
+- Concurrency can make a big difference for two types of problems: I/O-bound and CPU-bound
+- **I/O-bound** problems cause your program to slow down because it frequently must wait for input/output (I/O) from some external resource
+  - arise frequently when your program is working with things that are much slower than your CPU
+  - the slow things your program will interact with most frequently are the file system and network connections
+- **CPU-bound** programs: programs that do significant computation without talking to the network or accessing a file
+  - the resource limiting the speed of your program is the CPU
 
 ## Sources
 
