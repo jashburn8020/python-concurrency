@@ -137,6 +137,29 @@ count_async.py executed in 1.00 seconds.
   - deprecated, scheduled for removal in Python 3.10
 - See [`async_io/rand_async.py`](src/async_io/rand_async.py)
 
+```console
+$ python rand_async.py
+Initiated makerandom #0 with threshold at 7.
+makerandom #0 == 5 too low; retrying.
+Initiated makerandom #1 with threshold at 7.
+makerandom #1 == 7 too low; retrying.
+Initiated makerandom #2 with threshold at 7.
+makerandom #2 == 2 too low; retrying.
+makerandom #0 == 6 too low; retrying.
+---> Finished: makerandom #1 == 8
+makerandom #0 == 4 too low; retrying.
+makerandom #2 == 4 too low; retrying.
+makerandom #0 == 3 too low; retrying.
+makerandom #0 == 7 too low; retrying.
+makerandom #0 == 2 too low; retrying.
+makerandom #2 == 4 too low; retrying.
+---> Finished: makerandom #0 == 10
+makerandom #2 == 1 too low; retrying.
+---> Finished: makerandom #2 == 8
+
+r1: 10, r2: 8, r3: 8
+```
+
 ## Sources
 
 - "Concurrency in Python - Quick Guide." _Tutorialspoint_, [www.tutorialspoint.com/concurrency_in_python/concurrency_in_python_quick_guide.htm](https://www.tutorialspoint.com/concurrency_in_python/concurrency_in_python_quick_guide.htm).
